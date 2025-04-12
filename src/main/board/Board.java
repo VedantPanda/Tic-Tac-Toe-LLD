@@ -7,9 +7,16 @@ public class Board {
     private final int size;
     private final Symbol[][] board;
 
+    public int getEmptySpaces() {
+        return emptySpaces;
+    }
+
+    private int emptySpaces;
+
     public Board(int size) {
         this.size = size;
         this.board = new Symbol[size][size];
+        emptySpaces = size*size;
     }
 
     public boolean isValidMove(int row, int col){
@@ -18,6 +25,7 @@ public class Board {
 
     public void makeMove(int row, int col, Symbol symbol){
         board[row][col] = symbol;
+        emptySpaces--;
     }
 
     public boolean isGameOver(int row, int col){
@@ -64,17 +72,6 @@ public class Board {
         while(col<size){
             if(board[row][col++]!=symbol){
                 return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean isGameTied(){
-        for(Symbol[] symbols : board){
-            for(Symbol symbol : symbols){
-                if(symbol==null){
-                    return false;
-                }
             }
         }
         return true;

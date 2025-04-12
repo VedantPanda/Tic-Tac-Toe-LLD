@@ -38,7 +38,7 @@ public class TicTacToeGame implements BoardGames {
                 winnerName = currentPlayer.getName();
                 break;
             }
-            if(board.isGameTied()){
+            if(board.getEmptySpaces()==0){
                 break;
             }
             players.addLast(currentPlayer);
