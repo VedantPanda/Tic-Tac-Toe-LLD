@@ -35,10 +35,12 @@ public class TicTacToeGame implements BoardGames {
             Position position = currentPlayer.getPlayerStrategy().makeMove(board);
             board.makeMove(position.getRow(), position.getCol(), currentPlayer.getSymbol());
             if(board.isGameOver(position.getRow(), position.getCol())){
+                board.displayBoard();
                 winnerName = currentPlayer.getName();
                 break;
             }
             if(board.getEmptySpaces()==0){
+                board.displayBoard();
                 break;
             }
             players.addLast(currentPlayer);
