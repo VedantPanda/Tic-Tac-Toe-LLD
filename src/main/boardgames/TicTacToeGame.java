@@ -19,7 +19,7 @@ public class TicTacToeGame implements BoardGames {
     private final Deque<Player> players;
 
     public TicTacToeGame(int boardSize) {
-        this.board = new Board(boardSize);
+        this.board = Board.getBoardInstance(boardSize);
         players = new LinkedList<>();
         Player XPlayer = new Player(Symbol.X, PlayerStrategyFactory.getPlayerStrategy("Human"), "Alex");
         Player OPlayer = new Player(Symbol.O, PlayerStrategyFactory.getPlayerStrategy("Human"), "Michael");

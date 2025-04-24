@@ -13,10 +13,23 @@ public class Board {
 
     private int emptySpaces;
 
-    public Board(int size) {
+    private static volatile Board boardInstance;
+
+    private Board(int size) {
         this.size = size;
         this.board = new Symbol[size][size];
         emptySpaces = size*size;
+    }
+
+    public static Board getBoardInstance(int size) {
+        if(boardInstance==null) {
+            synchronized (Board.class) {
+                if(boardInstance==null) {
+                    boardInstance = new Board(size);
+                }
+            }
+        }
+        return boardInstance;
     }
 
     public boolean isValidMove(int row, int col){
