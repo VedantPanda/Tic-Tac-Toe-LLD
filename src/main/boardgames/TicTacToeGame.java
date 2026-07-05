@@ -30,11 +30,11 @@ public class TicTacToeGame implements BoardGames {
        this.sc = sc;
        System.out.println("Enter 1st Player Name");
        String p1Name = sc.nextLine();
-       sc.next();
+//       sc.next();
        XPlayer = new Player(Symbol.X, p1Name);
        System.out.println("Enter 2nd Player Name");
        String p2Name = sc.nextLine();
-       sc.next();
+//       sc.next();
        OPlayer = new Player(Symbol.O, p2Name);
        currentPlayer = XPlayer;
    }

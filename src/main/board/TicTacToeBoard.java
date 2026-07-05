@@ -20,7 +20,11 @@ public class TicTacToeBoard implements Board {
     }
 
     public boolean isValidMove(int row, int col){
-        return row<size && row>=0 && col>=0 && col<size && board[row][col]==null;
+        return isWithinBounds(row, col) && col<size && board[row][col]==null;
+    }
+
+    private boolean isWithinBounds(int row, int col) {
+        return row<size && row>=0 && col>=0 && col<size;
     }
 
     public void makeMove(int row, int col, Symbol symbol){
@@ -29,7 +33,7 @@ public class TicTacToeBoard implements Board {
     }
 
     public boolean isGameOver(int row, int col){
-        if(!isValidMove(row, col)) {
+        if(!isWithinBounds(row, col)) {
             return false;
         }
         Symbol symbol = board[row][col];
