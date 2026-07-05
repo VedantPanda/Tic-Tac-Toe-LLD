@@ -68,7 +68,7 @@ public class TicTacToeGame implements BoardGames {
     @Override
     public void announceResult() {
        if(GameStatus.WIN.equals(gameStatus)) {
-           System.out.println("Winner is "+currentPlayer.getName());
+           System.out.println("Winner is "+winner.getName());
        }
        else {
            System.out.println("Match ended in a Draw");
