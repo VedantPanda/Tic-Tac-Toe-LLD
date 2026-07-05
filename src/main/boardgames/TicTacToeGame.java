@@ -1,60 +1,78 @@
 package main.boardgames;
 
 import main.BoardGames;
-import main.Position;
 import main.board.Board;
+import main.board.TicTacToeBoard;
+import main.consts.GameStatus;
 import main.consts.Symbol;
-import main.factory.playerstrategy.PlayerStrategyFactory;
 import main.players.Player;
 
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.Scanner;
 
 public class TicTacToeGame implements BoardGames {
 
-    private final Board board;
+    private final Board ticTacToeBoard;
 
-    private String winnerName;
+    private final Player XPlayer;
 
-    private final Deque<Player> players;
+    private final Player OPlayer;
 
-    public TicTacToeGame(int boardSize) {
-        this.board = Board.getBoardInstance(boardSize);
-        players = new LinkedList<>();
-        Player XPlayer = new Player(Symbol.X, PlayerStrategyFactory.getPlayerStrategy("Human"), "Alex");
-        Player OPlayer = new Player(Symbol.O, PlayerStrategyFactory.getPlayerStrategy("Human"), "Michael");
-        players.add(XPlayer);
-        players.add(OPlayer);
-    }
+    private Player currentPlayer;
+
+    private Player winner;
+
+    private GameStatus gameStatus;
+
+   public TicTacToeGame() {
+       ticTacToeBoard = new TicTacToeBoard();
+       XPlayer = new Player(Symbol.X, "Dwight");
+       OPlayer = new Player(Symbol.O, "Jim");
+       currentPlayer = XPlayer;
+   }
 
     @Override
     public void playGame() {
         while(true){
-            board.displayBoard();
-            Player currentPlayer = players.removeFirst();
-            Position position = currentPlayer.getPlayerStrategy().makeMove(board);
-            board.makeMove(position.getRow(), position.getCol(), currentPlayer.getSymbol());
-            if(board.isGameOver(position.getRow(), position.getCol())){
-                board.displayBoard();
-                winnerName = currentPlayer.getName();
+            ticTacToeBoard.displayBoard();
+            System.out.println("Player's turn "+currentPlayer.getName());
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter row between 1 and 3");
+            int row = sc.nextInt();
+            System.out.println("Enter column between 1 and 3");
+            int col = sc.nextInt();
+            if (!ticTacToeBoard.isValidMove(row-1, col-1)) {
+                System.out.println("Invalid move try again");
+                continue;
+            }
+            ticTacToeBoard.makeMove(row-1, col-1, currentPlayer.getSymbol());
+            if(ticTacToeBoard.isGameOver(row-1, col-1)) {
+                gameStatus = GameStatus.WIN;
+                winner = currentPlayer;
+                ticTacToeBoard.displayBoard();
                 break;
             }
-            if(board.getEmptySpaces()==0){
-                board.displayBoard();
+            else if(ticTacToeBoard.isDraw()) {
+                gameStatus = GameStatus.DRAW;
+                ticTacToeBoard.displayBoard();
                 break;
             }
-            players.addLast(currentPlayer);
+            if(currentPlayer == XPlayer) {
+                currentPlayer = OPlayer;
+            }
+            else {
+                currentPlayer = XPlayer;
+            }
         }
     }
 
     @Override
-    public void announceWinner(){
-        if(winnerName!=null){
-            System.out.println("Winner is "+winnerName);
-        }
-        else{
-            System.out.println("Game is tied");
-        }
+    public void announceResult() {
+       if(GameStatus.WIN.equals(gameStatus)) {
+           System.out.println("Winner is "+currentPlayer.getName());
+       }
+       else {
+           System.out.println("Match ended in a Draw");
+       }
     }
 
 }
