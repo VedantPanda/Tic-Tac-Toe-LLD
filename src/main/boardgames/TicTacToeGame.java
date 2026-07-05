@@ -23,10 +23,19 @@ public class TicTacToeGame implements BoardGames {
 
     private GameStatus gameStatus;
 
-   public TicTacToeGame() {
+    private final Scanner sc;
+
+   public TicTacToeGame(Scanner sc) {
        ticTacToeBoard = new TicTacToeBoard();
-       XPlayer = new Player(Symbol.X, "Dwight");
-       OPlayer = new Player(Symbol.O, "Jim");
+       this.sc = sc;
+       System.out.println("Enter 1st Player Name");
+       String p1Name = sc.nextLine();
+       sc.next();
+       XPlayer = new Player(Symbol.X, p1Name);
+       System.out.println("Enter 2nd Player Name");
+       String p2Name = sc.nextLine();
+       sc.next();
+       OPlayer = new Player(Symbol.O, p2Name);
        currentPlayer = XPlayer;
    }
 
@@ -35,7 +44,6 @@ public class TicTacToeGame implements BoardGames {
         while(true){
             ticTacToeBoard.displayBoard();
             System.out.println("Player's turn "+currentPlayer.getName());
-            Scanner sc = new Scanner(System.in);
             System.out.println("Enter row between 1 and 3");
             int row = sc.nextInt();
             System.out.println("Enter column between 1 and 3");
@@ -63,6 +71,7 @@ public class TicTacToeGame implements BoardGames {
                 currentPlayer = XPlayer;
             }
         }
+        sc.close();
     }
 
     @Override

@@ -29,8 +29,14 @@ public class TicTacToeBoard implements Board {
     }
 
     public boolean isGameOver(int row, int col){
+        if(!isValidMove(row, col)) {
+            return false;
+        }
         Symbol symbol = board[row][col];
-        return rowCheck(row, symbol) || colCheck(col, symbol) || checkDiagonal(symbol);
+        if(row == col && checkDiagonal(symbol)) {
+            return true;
+        }
+        return rowCheck(row, symbol) || colCheck(col, symbol);
     }
 
     private boolean checkDiagonal(Symbol symbol) {
