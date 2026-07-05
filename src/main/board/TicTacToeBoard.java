@@ -37,7 +37,7 @@ public class TicTacToeBoard implements Board {
             return false;
         }
         Symbol symbol = board[row][col];
-        if(row == col && checkDiagonal(symbol)) {
+        if((row == col || row + col == size - 1) && checkDiagonal(symbol)) {
             return true;
         }
         return rowCheck(row, symbol) || colCheck(col, symbol);
